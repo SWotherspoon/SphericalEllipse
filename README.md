@@ -4,17 +4,17 @@
 <!-- badges: end -->
 
 
-A spherical ellipse is the locus of points on sphere for which the sum of the
-great circle distances to two focal points on the sphere is a constant.  The
-SphericalEllipse package provides basic functionality for producing spherical
-ellipses on the surface of a (spherical) Earth.
+A spherical or ellipsoidal ellipse is the locus of points on a sphere or ellipsoid for which the sum
+of the geodesic distances to two focal points on the surface is a constant.  The SphericalEllipse
+package provides basic functionality for producing ellipses on the surface of a spherical or
+ellipsoidal Earth.
 
 ## Installation
 
 You can install the development version of SphericalEllipse like so:
 
 ``` r
-remotes::install_github("SWotherspoon/SpehericalEllipse")
+remotes::install_github("SWotherspoon/SphericalEllipse")
 ```
 
 ## Example

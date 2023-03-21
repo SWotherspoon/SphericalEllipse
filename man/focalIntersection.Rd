@@ -8,10 +8,10 @@ focalIntersection(p1, p2, d1, d2)
 }
 \arguments{
 \item{p1}{a vector of length 2 giving the longitude and latitude
-of the first focal point}
+of the first focal point.}
 
 \item{p2}{a vector of length 2 giving the longitude and latitude
-of the second focal point}
+of the second focal point.}
 
 \item{d1}{a vector of great circle distances to the first focal
 point.}

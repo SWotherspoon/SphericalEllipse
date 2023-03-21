@@ -4,24 +4,24 @@
 \alias{sphericalEllipse}
 \title{Spherical Ellipse}
 \usage{
-sphericalEllipse(p1, p2, d, n = 25, R = 6378137)
+sphericalEllipse(p1, p2, d, n.pts = 25, R = 6378137)
 }
 \arguments{
 \item{p1}{a vector of length 2 giving the longitude and latitude
-of the first focal point}
+of the first focal point.}
 
 \item{p2}{a vector of length 2 giving the longitude and latitude
-of the second focal point}
+of the second focal point.}
 
 \item{d}{the combined distance from the two focal points to a
-point on the ellipse.  point.}
+point on the ellipse.}
 
-\item{n}{2n-1 points will be generated.}
+\item{n.pts}{2n.pts-1 points will be generated.}
 
-\item{R}{radius of the Earth}
+\item{R}{radius of the Earth.}
 }
 \value{
-a (2n-1) x 2 matrix of longitudes and latitudes of points
+a (2n.pts-1) x 2 matrix of longitudes and latitudes of points
 on the ellipse.
 }
 \description{
@@ -29,8 +29,8 @@ Calculate points on a spherical ellipse on the surface of the
 Earth.
 }
 \details{
-A spherical ellipse is the locus of points on sphere for which the
-sum of the great circle distances to two focal points on the
+A spherical ellipse is the locus of points on a sphere for which
+the sum of the great circle distances to two focal points on the
 sphere is a constant.
 
 Given the latitude and longitude of two focal points \code{p1} and
@@ -38,17 +38,21 @@ Given the latitude and longitude of two focal points \code{p1} and
 sequence of points of the spherical ellipse for which the sum of
 the great circle distances to the focal points is \code{d}.
 
-The final point is identical to the first. A cosine approximation
-is used to distribute the points evenly around the ellipse.  For
-highly eccentric ellipses it may be necessary to call
-\code{\link[=focalIntersection]{focalIntersection()}} directly to calculate a more even
-distribution of points.
+The final point is identical to the first. If \code{d} is less than the
+inter-focal distance, the function returns \code{NULL}.
+
+A cosine approximation is used to distribute the points evenly
+around the ellipse.  For highly eccentric ellipses it may be
+necessary to call \code{\link[=focalIntersection]{focalIntersection()}} directly to calculate a
+more even distribution of points.
 }
 \examples{
 p1 <- c(140,-45)
 p2 <- c(143,-40)
 ps <- sphericalEllipse(p1,p2,900000)
 plot(ps,type="l",xlab="Lon",ylab="Lat")
-points(rbind(p1,p2),col="red",pch=16) 
-
+points(rbind(p1,p2),col="red",pch=16)
+}
+\seealso{
+\code{\link[=ellipsoidalEllipse]{ellipsoidalEllipse()}}
 }

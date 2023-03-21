@@ -16,9 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(SphericalEllipse)
+library(geosphere)
 ```
-
-
 
 Calculate points on a spherical ellipse with foci (140E, 45S) and (143E, 40S) for which the sum of 
 the distances from the foci to any point on the ellipse is 900km 
@@ -32,12 +31,51 @@ points(rbind(p1,p2),col="red",pch=16)
 
 The combined distance to the foci from each point on the ellipse is
 ```{r}
-library(geosphere)
 distCosine(ps,p1)+distCosine(ps,p2)
 ```
 
 The first and last point repeat to close the polygon
 ```{r}
-ps[1,]
-ps[nrow(ps),]
+ps[1,]==ps[nrow(ps),]
 ```
+
+
+Calculate points on an ellipsoidal ellipse with foci (140E, 45S) and (143E, 40S) for which the sum of 
+the distances from the foci to any point on the ellipse is 900km 
+```{r}
+p1 <- c(140,-45)
+p2 <- c(143,-40)
+ps <- ellipsoidalEllipse(p1,p2,900000)
+plot(ps,type="l",xlab="Lon",ylab="Lat")
+points(rbind(p1,p2),col="red",pch=16)
+```
+
+The combined distance to the foci from each point on the ellipse is
+```{r}
+distGeo(ps,p1)+distGeo(ps,p2)
+```
+
+The first and last point repeat to close the polygon
+```{r}
+ps[1,]==ps[nrow(ps),]
+```
+
+
+
+Construct several n-ellipses for three focal points
+```{r}
+p1 <- c(140,-45)
+p2 <- c(143,-40)
+p3 <- c(138,-43)
+plot(rbind(p1,p2,p3),
+     xlab="Lon",ylab="Lat",xlim=c(135,145),ylim=c(-47,-38),
+     pch=16,col="red")
+points(t(sphericalCentroid(rbind(p1,p2,p3))),pch=16,col="blue")
+ps <- ellipsoidalNEllipse(rbind(p1,p2,p3),1400000)
+points(ps,type="l")
+ps <- ellipsoidalNEllipse(rbind(p1,p2,p3),1000000)
+lines(ps,type="l")
+ps <- ellipsoidalNEllipse(rbind(p1,p2,p3),800000)
+lines(ps,type="l")
+```
+

@@ -5,12 +5,11 @@ Authors@R:
     person("Simon", "Wotherspoon", email="Simon.Wotherspoon@aad.gov.au",
              role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6947-4445"))
 Description: Calculate the longitude and latitude of a set of points
-	lying on a spherical ellipse on the lying surface of the Earth,
-	assuming the Earth is a sphere.
+	lying on a spherical ellipse on the lying surface of the Earth.
 Depends:
-    R(>= 3.3.0)
+    R(>= 3.3.0),
+    geosphere
 Suggests:
-    geosphere,
     knitr,
     rmarkdown
 License: MIT + file LICENSE
