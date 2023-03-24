@@ -132,12 +132,14 @@ sphericalEllipse <- function(p1,p2,d,n.pts=25,R=6378137) {
   ## Interfocal distance on unit sphere
   d0 <- acos(sin(rad*p1[2L])*sin(rad*p2[2L])+
                cos(rad*p1[2L])*cos(rad*p2[2L])*cos(rad*(p1[1L]-p2[1L])))
-  if(d0<d) {
-    d1 <- (d-d0*cos(seq(0,pi,length.out=n.pts)))/2
-    ell <- focalIntersection(p1,p2,d1,d-d1)
-    ## Ensure result is closed
-    rbind(ell$p1,ell$p2[rev(1L+seq_len(n.pts-2L)),],ell$p1[1L,])
-  }
+  ## Degenerate cases
+  if(d0 >= d) return(NULL)
+  if(d0 < (1.0E-4)/R) return(destPoint(p1,seq(-180,180,length.out=2*n.pts-1),d,r=1))
+
+  d1 <- (d-d0*cos(seq(0,pi,length.out=n.pts)))/2
+  ell <- focalIntersection(p1,p2,d1,d-d1)
+  ## Ensure result is closed
+  rbind(ell$p1,ell$p2[rev(1L+seq_len(n.pts-2L)),],ell$p1[1L,])
 }
 
 
@@ -166,7 +168,7 @@ sphericalEllipse <- function(p1,p2,d,n.pts=25,R=6378137) {
 ##'
 ##' For most applications, [sphericalEllipse()] provides an adequate
 ##' approximation that is more efficient to compute.
-##' 
+##'
 ##' @title Ellipsoidal Ellipse
 ##' @param p1 a vector of length 2 giving the longitude and latitude
 ##'   of the first focal point.
@@ -206,7 +208,7 @@ ellipsoidalEllipse <- function(p1,p2,d,n.pts=50,
     r.upr <- rep((d+d0)/2,n.pts)
     p.upr <- destPoint(p,b,r.upr,a=a,f=f)
     d.upr <- distGeo(p.upr,p1,a=a,f=f)+distGeo(p.upr,p2,a=a,f=f)
-    
+
     ## Bisection method
     for(k in seq_len(n.iters)) {
       r.mid <- (r.lwr+r.upr)/2
@@ -215,7 +217,7 @@ ellipsoidalEllipse <- function(p1,p2,d,n.pts=50,
       r.upr <- ifelse(d.mid >= d,r.mid,r.upr)
       r.lwr <- ifelse(d.mid <= d,r.mid,r.lwr)
     }
-    
+
     r <- (r.lwr+r.upr)/2
     ps <- destPoint(p,b,r,a=a,f=f)
     rbind(ps,ps[1L,])
@@ -291,14 +293,14 @@ ellipsoidalNEllipse <- function(ps,d,n.pts=50,
   d.lwr <- 0
   for(k in seq_len(n)) d.lwr <- d.lwr + distGeo(p.lwr,ps[k,],a=a,f=f)
 
-  if(all(d.lwr <= d)) { 
+  if(all(d.lwr <= d)) {
 
     ## Outer boundary
     r.upr <- rep(2*d,length(b))
     p.upr <- destPoint(p,b,r.upr,a=a,f=f)
     d.upr <- 0
     for(k in seq_len(n)) d.upr <- d.upr + distGeo(p.upr,ps[k,],a=a,f=f)
-    
+
     ## Bisection method
     for(k in seq_len(n.iters)) {
       r.mid <- (r.lwr+r.upr)/2
@@ -308,7 +310,7 @@ ellipsoidalNEllipse <- function(ps,d,n.pts=50,
       r.upr <- ifelse(d.mid >= d,r.mid,r.upr)
       r.lwr <- ifelse(d.mid <= d,r.mid,r.lwr)
     }
-    
+
     r <- (r.lwr+r.upr)/2
     ps <- destPoint(p,b,r,a=a,f=f)
     rbind(ps,ps[1L,])
