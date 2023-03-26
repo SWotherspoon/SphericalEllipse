@@ -130,11 +130,12 @@ sphericalEllipse <- function(p1,p2,d,n.pts=25,R=6378137) {
   d <- d/R
 
   ## Interfocal distance on unit sphere
-  d0 <- acos(sin(rad*p1[2L])*sin(rad*p2[2L])+
-               cos(rad*p1[2L])*cos(rad*p2[2L])*cos(rad*(p1[1L]-p2[1L])))
+  cosd0 <- sin(rad*p1[2L])*sin(rad*p2[2L])+cos(rad*p1[2L])*cos(rad*p2[2L])*cos(rad*(p1[1L]-p2[1L]))
+  d0 <- acos(min(1,max(-1,cosd0)))
+
   ## Degenerate cases
   if(d0 >= d) return(NULL)
-  if(d0 < (1.0E-4)/R) return(destPoint(p1,seq(-180,180,length.out=2*n.pts-1),d,r=1))
+  if(d0*R < 1) return(destPoint(p1,seq(-180,180,length.out=2*n.pts-1),d,r=1))
 
   d1 <- (d-d0*cos(seq(0,pi,length.out=n.pts)))/2
   ell <- focalIntersection(p1,p2,d1,d-d1)
