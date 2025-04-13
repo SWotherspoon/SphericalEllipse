@@ -5,7 +5,8 @@ Authors@R:
     person("Simon", "Wotherspoon", email="Simon.Wotherspoon@aad.gov.au",
              role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6947-4445"))
 Description: Calculate the longitude and latitude of a set of points
-	lying on a spherical ellipse on the lying surface of the Earth.
+	  lying on a spherical ellipse on the lying surface of the Earth, assuming 
+	  the Earth is a sphere.
 Depends:
     R(>= 3.3.0),
     geosphere
@@ -15,7 +16,7 @@ Suggests:
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 URL: https://github.com/SWotherspoon/SphericalEllipse
 BugReports: https://github.com/SWotherspoon/SphericalEllipse/issues
 VignetteBuilder: knitr

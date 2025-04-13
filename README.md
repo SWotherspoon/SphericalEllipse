@@ -11,8 +11,7 @@ ellipsoidal Earth.
 
 ## Installation
 
-You can install the development version of SphericalEllipse like so:
-
+The current version of Combin8R can be installed from GitHub using the remotes package.
 ``` r
 remotes::install_github("SWotherspoon/SphericalEllipse")
 ```
